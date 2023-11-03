@@ -38,7 +38,8 @@
                                        image:(UIImage *)image
                                     maxWidth:(NSNumber *)maxWidth
                                    maxHeight:(NSNumber *)maxHeight
-                                imageQuality:(NSNumber *)imageQuality {
+                                imageQuality:(NSNumber *)imageQuality
+                                    fileName:(NSString *)fileName {
   NSString *suffix = kFLTImagePickerDefaultSuffix;
   FLTImagePickerMIMEType type = kFLTImagePickerMIMETypeDefault;
   NSDictionary *metaData = nil;

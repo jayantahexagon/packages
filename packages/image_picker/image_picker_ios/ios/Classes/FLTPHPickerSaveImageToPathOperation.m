@@ -142,17 +142,25 @@ API_AVAILABLE(ios(14))
                                              maxWidth:self.maxWidth
                                             maxHeight:self.maxHeight
                                   isMetadataAvailable:YES];
+      
   }
   if (originalAsset) {
+      
     void (^resultHandler)(NSData *imageData, NSString *dataUTI, NSDictionary *info) =
         ^(NSData *_Nullable imageData, NSString *_Nullable dataUTI, NSDictionary *_Nullable info) {
+            NSString *fileName = @"";
+            NSArray<PHAssetResource *> *resources = [PHAssetResource assetResourcesForAsset:originalAsset];
+            if (resources.count > 0) {
+                PHAssetResource *resource = resources[0]; // Get the first resource
+                fileName = resource.originalFilename;
+            }
           // maxWidth and maxHeight are used only for GIF images.
           NSString *savedPath = [FLTImagePickerPhotoAssetUtil
-              saveImageWithOriginalImageData:imageData
+                                 saveImageWithOriginalImageData:imageData
                                        image:localImage
                                     maxWidth:self.maxWidth
                                    maxHeight:self.maxHeight
-                                imageQuality:self.desiredImageQuality];
+                                 imageQuality:self.desiredImageQuality fileName:fileName];
           [self completeOperationWithPath:savedPath error:nil];
         };
     if (@available(iOS 13.0, *)) {
@@ -185,7 +193,7 @@ API_AVAILABLE(ios(14))
                                                                image:localImage
                                                             maxWidth:self.maxWidth
                                                            maxHeight:self.maxHeight
-                                                        imageQuality:self.desiredImageQuality];
+                                                        imageQuality:self.desiredImageQuality fileName:@""];
     [self completeOperationWithPath:savedPath error:nil];
   }
 }
